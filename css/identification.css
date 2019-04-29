@@ -1,0 +1,147 @@
+input[type=text], select {
+  width: 70%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  font-size: 15px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=date], select {
+  width: 70%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  font-size: 15px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="date"]:not(.has-value):before{
+  content: attr(placeholder);
+}
+
+input[type=number], select {
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  font-size: 15px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=password], select {
+  width: 70%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  font-size: 15px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 30%;
+  color: white;
+  padding: 10px 10px;
+  margin: 15px 0;
+  border: none;
+  font-size: 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+  background-size: 1800% 1800%;
+
+  -webkit-animation: rainbow 18s ease infinite;
+  -z-animation: rainbow 18s ease infinite;
+  -o-animation: rainbow 18s ease infinite;
+  animation: rainbow 18s ease infinite;}
+
+  @-webkit-keyframes rainbow {
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
+  }
+  @-moz-keyframes rainbow {
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
+  }
+  @-o-keyframes rainbow {
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
+  }
+  @keyframes rainbow {
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
+  }
+
+.formtitle {
+  margin: 0;
+  margin-bottom: 1vh;
+  font-weight: normal;
+  font-family: Verdana;
+  font-size: 2rem;
+}
+
+.logo {
+  padding-top: 10vh;
+  margin-left: 25vw;
+  margin-right: 25vw;
+  min-width: 305px;
+  max-width: 750px;
+  width: 50vw;
+  height: auto;
+}
+
+.logo img {
+  width: 50vw;
+  max-width: 750px;
+  min-width: 305px;
+  height: auto;
+}
+
+.form {
+  position: relative;
+  text-align: center;
+  margin-left: 25vw;
+  margin-right: 25vw;
+  padding-top: 3vw;
+  padding-bottom: 5vw;
+  width: 50vw;
+  min-width: 305px;
+  max-width: 750px;
+  background-color: #fcfcfc;
+  -webkit-box-shadow: 0px 0px 27px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 27px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 27px 0px rgba(0,0,0,0.75);
+}
+
+.form h4 {
+  margin: 0;
+  text-align: center;
+  font-family: Verdana;
+  font-weight: lighter;
+  font-size: 0.7rem;
+}
+
+.form h3 {
+  margin: 0;
+  text-align: center;
+  font-family: Verdana;
+  font-weight: lighter;
+  font-size: 1rem;
+}
+
+.form a {
+  text-decoration: none;
+  color: #3498db;
+}

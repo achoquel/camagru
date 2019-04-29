@@ -1,0 +1,90 @@
+form {
+  text-align: center;
+}
+
+input[type=text], select {
+  width: 70%;
+  text-align: center;
+  font-size: 1.5vw;
+  margin-top: 2vh;
+  padding: 1vw 1vh 1vw 1vh;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.srcbt {
+  width: 10%;
+  font-size: 1.5vw;
+  padding: 1vw 1vh 1vw 1vh;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-family: Verdana;
+  text-align: center;
+  font-size: 3vw;
+  margin: 0;
+  padding: 0;
+}
+
+.title {
+  text-align: left;
+  padding: 0;
+  font-weight: normal;
+  margin: 0;
+  margin-left: 2vw;
+  font-size: 2vw;
+}
+
+.result {
+  padding-top: 1vh;
+}
+
+.nothing {
+  margin-top: 10vh;
+  margin-bottom: 7vh;
+  color: #c1c1c1;
+}
+
+.nothing i {
+  font-size: 6vw;
+}
+
+.user {
+  text-decoration: none;
+  color: black;
+  font-size: 1.5vw;
+  display: inline;
+}
+
+.user h1{
+  font-weight: bold;
+  font-family: Verdana;
+  text-align: left;
+  font-size: 1.5vw;
+  margin-left: 1vw;
+  display: inline;
+}
+
+.pp {
+  margin-left: 1vw;
+  width: 5vw;
+  height: 5vw;
+  max-width: 50px;
+  max-height: 50px;
+  border-radius: 100%;
+}
+
+.res {
+  position: relative;
+  display: flex;
+  align-items:center;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 1vh;
+}

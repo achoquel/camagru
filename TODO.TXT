@@ -1,0 +1,21 @@
+HAUT:
+Fix la camera
+Faire l'upload pour montage
+Montages
+.htaccess
+upload fichier vide a fix
+
+MOYEN:
+Préparer toutes les requetes
+Ajouter htmlspecialchars a tous les variables qu'on affiches
+gestion des erreurs login/register/accountmanager/password recover
+delete des infos accountmanager
+notif commentaires
+passer les images en stockage serveur
+
+
+BAS:
+search pp css
+add like btn sur details
+Checker le responsive de partout
+Gestion des erreurs avatar upload et final check

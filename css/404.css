@@ -1,0 +1,43 @@
+.header .mlogo {
+  position: absolute;
+  top: 0.5vh;
+  left: 0.7vw;
+}
+
+.header .mlogo img {
+  height: 4vh;
+  width: auto;
+}
+
+.e404 {
+  padding-top: 5.8vh;
+  text-align: center;
+}
+
+.e404 img {
+  width: 30vw;
+  max-width: 300px;
+  margin-top: 5vh;
+  height: auto;
+}
+
+.e404 h1 {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 5rem;
+}
+
+.e404 h2 {
+  font-family: Verdana;
+  font-weight: normal;
+  font-size: 2rem;
+  color: black;
+  margin-top: 1vh;
+}
+
+.e404 a {
+  font-family: Verdana;
+  font-size: 1rem;
+  text-decoration: none;
+  color: cyan;
+}

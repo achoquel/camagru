@@ -1,0 +1,66 @@
+.pic {
+  position: relative;
+  display: block;
+  margin-top: 1vh;
+  margin-bottom: 2vh;
+  padding-top: 0.5vh;
+  width: 100%;
+  border-top: 0.5px solid #d1d1d1;
+}
+
+.pic .user {
+  text-align: center;
+  padding-bottom: 0.5vh;
+  border-bottom: 0.5px solid #d1d1d1;
+}
+
+.sep {
+  width: 50%;
+  margin-top: 0;
+  padding-top: 0;
+  margin-top: 1vh;
+  margin-bottom: 0.25vh;
+  color: #ccc;
+}
+
+.pic .picture img{
+  padding-bottom: 0.2vh;
+}
+
+form {
+  text-align: center;
+}
+
+input[type=text], select {
+  width: 70%;
+  text-align: center;
+  font-size: 1.5vw;
+  margin-top: 2vh;
+  padding: 1vw 1vh 1vw 1vh;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.srcbt {
+  width: 10%;
+  font-size: 1.5vw;
+  padding: 1vw 1vh 1vw 1vh;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.delbtn {
+  font-size: 1.5vw;
+  margin-left: 0;
+  padding: 0;
+  margin-right: 0.5vw;
+  color: red;
+  box-sizing: border-box;
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  outline:none;
+}

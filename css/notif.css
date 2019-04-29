@@ -1,0 +1,67 @@
+h1 {
+  font-family: Verdana;
+  text-align: center;
+  font-weight: normal;
+  font-size: 3vw;
+}
+
+.nothing {
+  margin-top: 10vh;
+  margin-bottom: 7vh;
+  color: #c1c1c1;
+}
+
+.nothing i {
+  font-size: 6vw;
+}
+
+.from {
+  font-family: Verdana;
+  font-size: 2vw;
+  margin-left: 1vw;
+  display:inline
+}
+
+.notif {
+  font-family: Verdana;
+  font-size: 1.8vw;
+  font-weight: normal;
+  margin-left: 0.7vw;
+  display:inline
+}
+
+form {
+  margin-top: 0;
+  padding-top: 0;
+  text-align: center;
+}
+
+.delbt {
+  text-align: center;
+  width: 10%;
+  font-size: 1.5vw;
+  padding: 1vw 1vh 1vw 1vh;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.pp {
+  margin-left: 1vw;
+  width: 5vw;
+  height: 5vw;
+  max-width: 50px;
+  max-height: 50px;
+  border-radius: 100%;
+}
+
+.not {
+  position: relative;
+  display: flex;
+  align-items:center;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 1vh;
+}

@@ -1,0 +1,149 @@
+table, tr {
+  text-align: center;
+  width: auto;
+  height: auto;
+}
+
+td {
+  font-family: Verdana;
+  font-size: 1.6vw;
+  font-weight: normal;
+  text-align: center;
+}
+
+.main {
+
+}
+
+.sep {
+  width: 75%;
+  margin-top: 0;
+  padding-top: 0;
+  margin-bottom: 2vh;
+}
+
+form {
+  text-align: center;
+}
+
+h1 {
+  font-family: Verdana;
+  font-size: 2vw;
+  text-align: center;
+}
+
+h2 {
+  font-family: Verdana;
+  font-size: 1.6vw;
+  font-weight: normal;
+  text-align: center;
+}
+
+.select {
+  display: inline-block;
+  font-size: 1.3vw;
+}
+
+.avatar {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 15vw;
+  height: 15vw;
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 100%;
+}
+
+.recommendations {
+  font-family: Verdana;
+  font-weight: normal;
+  font-size: 1vw;
+}
+
+input[type=text], select {
+  width: 70%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  font-size: 15px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=date], select {
+  width: 70%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  font-size: 15px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="date"]:not(.has-value):before{
+  content: attr(placeholder);
+}
+
+input[type=number], select {
+  width: 50%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  font-size: 15px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=password], select {
+  width: 70%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  font-size: 15px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 70%;
+  color: white;
+  padding: 10px 10px;
+  margin: 15px 0;
+  border: none;
+  font-size: 1.5vw;
+  border-radius: 4px;
+  cursor: pointer;
+  background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+  background-size: 1800% 1800%;
+
+  -webkit-animation: rainbow 18s ease infinite;
+  -z-animation: rainbow 18s ease infinite;
+  -o-animation: rainbow 18s ease infinite;
+  animation: rainbow 18s ease infinite;}
+
+  @-webkit-keyframes rainbow {
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
+  }
+  @-moz-keyframes rainbow {
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
+  }
+  @-o-keyframes rainbow {
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
+  }
+  @keyframes rainbow {
+    0%{background-position:0% 82%}
+    50%{background-position:100% 19%}
+    100%{background-position:0% 82%}
+  }

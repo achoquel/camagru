@@ -1,0 +1,225 @@
+/*
+** Type page
+*/
+
+.choice {
+  position: absolute;
+  top: 10vh;
+  text-align: center;
+  margin-left: 15vw;
+  margin-right: 15vw;
+  padding-bottom: 5vw;
+  width: 70vw;
+  background-color: #fcfcfc;
+  -webkit-box-shadow: 0px 0px 27px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 27px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 27px 0px rgba(0,0,0,0.75);
+}
+
+.choice1 {
+  display: inline-block;
+  margin: 5vw 3vw 2vw 3vw;
+  width: 25vw;
+  height: 25vw;
+  background-image: linear-gradient(to left bottom, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
+}
+
+.choice2 {
+  display: inline-block;
+  margin: 5vw 3vw 2vw 3vw;
+  width: 25vw;
+  height: 25vw;
+  background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
+}
+
+.choice1 span {
+  position: relative;
+  color: white;
+  font-size: 15vw;
+  top: 2vh;
+  left: 0.5vw;
+}
+
+h6 {
+  font-family: verdana;
+  font-weight: lighter;
+  margin: 0;
+  font-size: 2vw;
+}
+
+.choice2 span {
+  position: relative;
+  color: white;
+  font-size: 15vw;
+  top: 2vh;
+  left: 0.5vw;
+}
+
+.choicetitle {
+  margin: 0;
+  margin-top: 1vh;
+  margin-bottom: -1vh;
+  font-weight: normal;
+  font-family: Verdana;
+  font-size: 2rem;
+}
+
+/*
+** Webcam Page
+*/
+
+canvas {
+    display: none;
+}
+
+.campreview {
+  position: relative;
+  z-index: 0;
+  padding: 0;
+  top: 5vh;
+  left: 3vw;
+  width: 30vw;
+}
+
+.campreview img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30vw;
+  height: auto;
+  z-index: 1;
+}
+
+.campreview button {
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Verdana;
+	font-size:1.7vw;
+  text-align: center;
+	padding:1vh 2vw;
+	text-decoration:none;
+}
+
+#reset {
+  width: 40%;
+  margin-left: 7%;
+  margin-right: 5%;
+  color: white;
+  padding: 10px 10px;
+  border: none;
+  font-size: 3vw;
+  border-radius: 4px;
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #bd2c2c), color-stop(1, #ff3838));
+	background:-moz-linear-gradient(top, #bd2c2c 5%, #ff3838 100%);
+	background:-webkit-linear-gradient(top, #bd2c2c 5%, #ff3838 100%);
+	background:-o-linear-gradient(top, #bd2c2c 5%, #ff3838 100%);
+	background:-ms-linear-gradient(top, #bd2c2c 5%, #ff3838 100%);
+	background:linear-gradient(to bottom, #bd2c2c 5%, #ff3838 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#bd2c2c', endColorstr='#ff3838',GradientType=0);
+	background-color:#bd2c2c;
+  cursor: pointer;
+}
+
+#keep {
+  width: 40%;
+  color: white;
+  padding: 10px 10px;
+  margin: 15px 0;
+  border: none;
+  font-size: 3vw;
+  border-radius: 4px;
+  background-image: linear-gradient(to left bottom, #6bd16d, #63d664, #5adc5b, #4fe150, #43e643, #41ea42, #3eed42, #3bf141, #45f44e, #4ef65a, #57f965, #5ffb6f);
+  cursor: pointer;
+}
+
+#startbutton {
+  width: 100%;
+  color: white;
+  padding: 10px 10px;
+  margin: 15px 0;
+  border: none;
+  font-size: 3vw;
+  border-radius: 4px;
+  cursor: pointer;
+  background-image: linear-gradient(to right top, #095c80, #007b9f, #009bbb, #00bcd5, #12deeb);
+  }
+
+
+
+.prop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30vw;
+  height: auto;
+  z-index: 1;
+}
+
+.filterlist {
+  width: 56.5vw;
+  margin-left: 3vw;
+  margin-right: 5vw;
+  margin-bottom: 0;
+}
+
+.filterlist td {
+  text-align: center;
+  margin-left: 2vw;
+  font-family: Verdana;
+}
+
+.filterlist td img{
+  width: 5vw;
+  height: auto;
+}
+
+.bw {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+
+#rgb {
+  border-right: solid 3px black;
+  margin-right: 2vw;
+}
+
+#video {
+  position: relative;
+  width: 30vw;
+  height: auto;
+}
+
+#none {
+  color:red;
+  font-size: 3vw;
+  padding-right: 2vw;
+}
+
+.bodywebcam {
+  padding-top: 5.8vh;
+  padding-bottom: 7vh;
+  background-color: #ececec;
+  width: 90vw;
+  height: 100%;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  -webkit-box-shadow: 0px 0px 50px -5px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0px 0px 50px -5px rgba(0,0,0,0.3);
+  box-shadow: 0px 0px 50px -5px rgba(0,0,0,0.3);
+}
+
+.buttons {
+  position: relative;
+}
+
+/*
+** Upload Page
+*/
+.filter {
+  position: relative;
+  width: 3vw;
+  height: 3vw;
+  margin-bottom: 0;
+  display: block;
+}
