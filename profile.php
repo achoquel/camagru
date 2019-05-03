@@ -60,7 +60,7 @@
       $request->bindParam(':uid', $_SESSION['id']);
       $request->execute();
       $infos = $request->fetch(PDO::FETCH_ASSOC);
-      $request = $dbh->prepare('SELECT `picture`, `post_id` FROM `posts` INNER JOIN `users` ON `users`.`user_id` = `posts`.`user_id` WHERE `users`.`user_id` = :uid');
+      $request = $dbh->prepare('SELECT `picture`, `post_id` FROM `posts` INNER JOIN `users` ON `users`.`user_id` = `posts`.`user_id` WHERE `users`.`user_id` = :uid ORDER BY `post_id` DESC');
       $request->bindParam(':uid', $_SESSION['id']);
       $request->execute();
       $pics = $request->fetchAll(PDO::FETCH_ASSOC);
@@ -114,16 +114,16 @@
       <div class="rainbow">
       </div>
       <div class="body">
-        <img class='profilepicture' src="data:image/png;base64,<?php echo $avatar; ?>" alt="avatar">
-        <h1 class="username"><?php echo $username; ?></h1>
-        <h2 class="realname"><?php echo $realname; ?></h2>
+        <img class='profilepicture' src="<?php echo htmlspecialchars($avatar); ?>" alt="avatar">
+        <h1 class="username"><?php echo htmlspecialchars($username); ?></h1>
+        <h2 class="realname"><?php echo htmlspecialchars($realname); ?></h2>
         <?php if (!empty($location))
         {?>
-        <h2 class="location"><i class="fas fa-map-marker-alt"></i> <?php echo $location; ?></h2>
+        <h2 class="location"><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($location); ?></h2>
         <?php
         } if (!empty($job))
         {?>
-        <h2 class="job"><i class="fas fa-suitcase"></i> <?php echo $job; ?></h2>
+        <h2 class="job"><i class="fas fa-suitcase"></i> <?php echo htmlspecialchars($job); ?></h2>
         <?php
         }
         if (isset($_SESSION) && isset($_SESSION['id']) && isset($_GET) && !isset($_GET['user'])) {?>
@@ -134,8 +134,8 @@
         <hr>
         <?php
           foreach ($pics as $picture) {
-            $photo = $picture['picture'];
-            $post_id = $picture['post_id'];
+            $photo = htmlspecialchars($picture['picture']);
+            $post_id = htmlspecialchars($picture['post_id']);
             echo "<div class='pic'>";
             echo "<a href='detail.php?id=$post_id'>";
             echo "<div class='picture'><img src='$photo' alt='photo'></div>";

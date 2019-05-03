@@ -6,6 +6,9 @@ cover        = document.querySelector('#cover'),
 canvas       = document.querySelector('#canvas'),
 photo        = document.querySelector('#photo'),
 startbutton  = document.querySelector('#startbutton'),
+saver  = document.querySelector('#saver'),
+filter_saver  = document.querySelector('#filterr'),
+bw_saver  = document.querySelector('#blackwhite'),
 keepbutton  = document.querySelector('#keep'),
 deletebutton  = document.querySelector('#reset'),
 filter  = document.querySelector('#filter'),
@@ -20,13 +23,16 @@ filter_assembly  = document.querySelector('#assembly'),
 filter_bw  = document.querySelector('#bw'),
 filter_rgb  = document.querySelector('#rgb'),
 filter_none  = document.querySelector('#none'),
+filter_list = document.querySelector('#flist'),
+montage_list = document.querySelector('#mlist'),
 width = 1920,
-height = 0;
+height = 1440;
 
 keepbutton.style.display = 'none';
 deletebutton.style.display = 'none';
 startbutton.style.display = 'none';
 filter.style.display = 'none';
+montage_list.style.visibility = 'hidden';
 
 navigator.getMedia = ( navigator.getUserMedia ||
                    navigator.webkitGetUserMedia ||
@@ -54,14 +60,17 @@ console.log("An error occured! " + err);
 
 video.addEventListener('canplay', function(ev){
 if (!streaming) {
-height = video.videoHeight / (video.videoWidth/width);
+//height = video.videoHeight / (video.videoWidth/width);
 video.setAttribute('width', width);
 video.setAttribute('height', height);
 canvas.setAttribute('width', width);
 canvas.setAttribute('height', height);
+filter.setAttribute('width', width);
+filter.setAttribute('height', height);
 streaming = true;
 startbutton.style.display = 'inline-block';
 filter.style.display = 'block';
+montage_list.style.visibility = 'visible';
 }
 }, false);
 
@@ -71,6 +80,9 @@ canvas.height = height;
 canvas.getContext('2d').drawImage(video, 0, 0, width, height);
 var data = canvas.toDataURL('image/png');
 photo.setAttribute('src', data);
+saver.setAttribute('value', data);
+filter_saver.setAttribute('value', filter.getAttribute('src'));
+bw_saver.setAttribute('value', video.getAttribute('class'));
 }
 
 filter_rainbow.addEventListener('click', function(){
@@ -125,6 +137,7 @@ ev.preventDefault();
 startbutton.style.display = 'none';
 keepbutton.style.display = 'inline-block';
 deletebutton.style.display = 'inline-block';
+filter_list.style.visibility = 'hidden';
 }, false);
 
 deletebutton.addEventListener('click', function(){
@@ -132,6 +145,7 @@ deletebutton.addEventListener('click', function(){
   keepbutton.style.display = 'none';
   startbutton.style.display = 'inline-block';
   deletebutton.style.display = 'none';
+  filter_list.style.visibility = 'visible';
 });
 
 })();

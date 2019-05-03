@@ -21,6 +21,12 @@ if (isset($_POST) && isset($_POST['submit']) && $_POST['submit'] == 'Save Change
       $request->execute();
     }
   }
+  if (empty($_POST['firstname']))
+  {
+    $request = $dbh->prepare('UPDATE `users` SET `firstname` = null WHERE `user_id` = :id');
+    $request->bindParam(':id', $_SESSION['id']);
+    $request->execute();
+  }
   if (isset($_POST['lastname']) && !empty($_POST['lastname']))
   {
     if (strlen($_POST['lastname']) > 42)
@@ -34,6 +40,12 @@ if (isset($_POST) && isset($_POST['submit']) && $_POST['submit'] == 'Save Change
       $request->bindParam(':id', $_SESSION['id']);
       $request->execute();
     }
+  }
+  if (empty($_POST['lastname']))
+  {
+    $request = $dbh->prepare('UPDATE `users` SET `lastname` = null WHERE `user_id` = :id');
+    $request->bindParam(':id', $_SESSION['id']);
+    $request->execute();
   }
   if (isset($_POST['country']) && !empty($_POST['country']))
   {
@@ -49,6 +61,12 @@ if (isset($_POST) && isset($_POST['submit']) && $_POST['submit'] == 'Save Change
       $request->execute();
     }
   }
+  if (empty($_POST['country']))
+  {
+    $request = $dbh->prepare('UPDATE `users` SET `country` = null WHERE `user_id` = :id');
+    $request->bindParam(':id', $_SESSION['id']);
+    $request->execute();
+  }
   if (isset($_POST['city']) && !empty($_POST['city']))
   {
     if (strlen($_POST['city']) > 42)
@@ -63,6 +81,12 @@ if (isset($_POST) && isset($_POST['submit']) && $_POST['submit'] == 'Save Change
       $request->execute();
     }
   }
+  if (empty($_POST['city']))
+  {
+    $request = $dbh->prepare('UPDATE `users` SET `city` = null WHERE `user_id` = :id');
+    $request->bindParam(':id', $_SESSION['id']);
+    $request->execute();
+  }
   if (isset($_POST['job']) && !empty($_POST['job']))
   {
     if (strlen($_POST['job']) > 42)
@@ -76,6 +100,12 @@ if (isset($_POST) && isset($_POST['submit']) && $_POST['submit'] == 'Save Change
       $request->bindParam(':id', $_SESSION['id']);
       $request->execute();
     }
+  }
+  if (empty($_POST['job']))
+  {
+    $request = $dbh->prepare('UPDATE `users` SET `job` = null WHERE `user_id` = :id');
+    $request->bindParam(':id', $_SESSION['id']);
+    $request->execute();
   }
   if (isset($_POST['mnotif']))
   {

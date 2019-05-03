@@ -7,7 +7,10 @@
       if (isset($_POST) && isset($_POST['oldpasswd']) && isset($_POST['newpasswd']) && isset($_POST['newverifpasswd']) && isset($_POST['submit']) && $_POST['submit'] == 'Modify Password')
       {
         if (strlen($_POST['newpasswd']) < 6)
+        {
           $err = 1;
+          header('Location: accountmanager.php?error=pc');
+        }
         if ($_POST['newpasswd'] != $_POST['newverifpasswd'])
         {
           $err = 1;

@@ -25,15 +25,12 @@
         {
             require('config/database.php');
             try {
-                //Create Connection
                 $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
                 $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                //Requests here
-                //Check if hashed email is ok
                 $request = 'SELECT `email`, `validated` FROM `users`';
                 foreach ($dbh->query($request) as $result)
                 {
-                  if (isset($result['email']) && isset($result['validated']) && (strtoupper(hash('whirlpool', $result['email'])) == $_GET['v'] && $result['validated'] == 0))
+                  if (isset($result['email']) && isset($result['validated']) && (strtoupper(hash('whirlpool', $result['email'])) == $_GET['v']) && $result['validated'] == 0)
                   {
                     $validation = 1;
                     $request = $dbh->prepare('UPDATE `users` SET `validated` = 1 WHERE `email` = :email');
@@ -41,7 +38,6 @@
                     $request->execute();
                   }
                 }
-                //Destroy Connection
                   $dbh = null;
                   $sth = null;
                   $request = null;

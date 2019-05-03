@@ -23,7 +23,6 @@ if (isset($_POST) && isset($_POST['object']))
       $request->execute(array(':object' => '%' . $_POST['object'] . '%'));
       $pics = $request->fetchAll(PDO::FETCH_ASSOC);
       $_SESSION['search_pics'] = $pics;
-      $_SESSION['object'] = $_POST['object'];
       header('Location: search.php');
       } catch (PDOException $e) {
         print "Erreur !: " . $e->getMessage() . "<br/>";

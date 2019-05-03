@@ -59,6 +59,11 @@ if (isset($_GET) && isset($_GET['id']))
       $request->bindParam(':pid', $_GET['id']);
       $request->execute();
       $comments = $request->fetchAll(PDO::FETCH_ASSOC);
+      $request = $dbh->prepare('SELECT * FROM `likes` WHERE `post_id` = :post AND `user_id` = :uid');
+      $request->bindParam(':post', $_GET['id']);
+      $request->bindParam(':uid', $_SESSION['id']);
+      $request->execute();
+      $isLiked = $request->fetch(PDO::FETCH_ASSOC);
     }
     $request = null;
     $dbh = null;
@@ -92,9 +97,9 @@ if (isset($_GET) && isset($_GET['id']))
       </div>
       <div class="body">
         <?php
-          $username = $picture['poster'];
-          $imgsrc = $picture['picture'];
-          $desc  = $picture['description'];
+          $username = htmlspecialchars($picture['poster']);
+          $imgsrc = htmlspecialchars($picture['picture']);
+          $desc  = htmlspecialchars($picture['description']);
           echo "<div class='pic'>";
           echo "<div class='user'><h1 class='username'>$username's post</h1></div>";
           echo "<div class='picture'><img src='$imgsrc' alt='Picture of $username'></div>";
@@ -102,13 +107,13 @@ if (isset($_GET) && isset($_GET['id']))
           echo "<hr class='sep'>";
           foreach($comments as $comment)
           {
-            $user = $comment['commenter'];
-            $text = $comment['comment'];
+            $user = htmlspecialchars($comment['commenter']);
+            $text = htmlspecialchars($comment['comment']);
             echo "<div class='desc'>";
             if ($comment['user_id'] == $_SESSION['id'])
             {
-              $cid = $comment['comment_id'];
-              $id = $_GET['id'];
+              $cid = htmlspecialchars($comment['comment_id']);
+              $id = htmlspecialchars($_GET['id']);
             ?><form action='comment.php?del' style="display: inline;" method='post'>
                     <input type='hidden' name='id' value="<?php echo $id; ?>">
                     <input type='hidden' name='cid' value="<?php echo $cid; ?>">
@@ -119,10 +124,19 @@ if (isset($_GET) && isset($_GET['id']))
             }
             echo "<h1 class='descuser'>$user</h1>   <h2 class='desccont'>$text</h2></div>";
           }
+          if (empty($isLiked))
+            $liked = 0;
+          else
+            $liked = 1;
+          echo "<a href='like.php?id=".$_GET['id']."&detail' class='like'";
+          if ($liked == 1)
+            echo " style='color:red;'><i class='fas fa-heart'></i></a>";
+          else
+            echo "><i class='far fa-heart'></i></a>";
           ?>
-          <form action="comment.php?add" method="post">
+          <form action="comment.php?add" method="post" style="display: inline;">
             <input type="text" name="comment" minlength="1" maxlength="256" placeholder="Comment this picture..." value="" required/>
-            <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
+            <input type="hidden" name="id" value="<?php echo htmlspecialchars($_GET['id']); ?>">
             <button type="submit" class="srcbt">
               <i class="fas fa-arrow-right"></i>
             </button>

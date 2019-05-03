@@ -3,31 +3,51 @@
   if (isset($_SESSION) && isset($_SESSION['id']))
     header("Location: index.php");
 //Check syntax of each field
-  if (isset($_POST) && isset($_POST['username']) && isset($_POST['pw']) && isset($_POST['pwverif']) && isset($_POST['birthday']) && isset($_POST['submit']) && $_POST['submit'] === 'Register')
+  if (isset($_POST) && isset($_POST['username']) && isset($_POST['email']) && isset($_POST['pw']) && isset($_POST['pwverif']) && isset($_POST['birthday']) && isset($_POST['submit']) && $_POST['submit'] === 'Register')
   {
     //username: max 32chars, only letters and numbers, automatically converted to lowercase
     if (strlen($_POST['username']) == 0 || strlen($_POST['username']) > 32)
-      header("Location: identification.php?register=ko&error=usernamelength");
+    {
+      $error = 1;
+      header("Location: identification.php?register=usernamelength");
+    }
     if (preg_match('/^([a-z]|[A-Z]|[0-9])+$/', $_POST['username']) === 0)
-      header("Location: identification.php?register=ko&error=usernamecontent");
-    $usr_username = strtolower($_POST['username']);
+    {
+      $error = 1;
+      header("Location: identification.php?register=usernamecontent");
+    }
+    if (!isset($error))
+      $usr_username = strtolower($_POST['username']);
     //email: validity
-    if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
-      $usr_email = $_POST['email'];
+    if (empty($_POST['email']) || filter_var($_POST['email'], FILTER_VALIDATE_EMAIL) === false)
+    {
+      $error = 1;
+      header("Location: identification.php?register=invalidemail");
+    }
     else
-    header("Location: identification.php?register=ko&error=invalidemail");
+      $usr_email = $_POST['email'];
     //Password: min 6chars, need 1 letter and 1 number at least
     if (strlen($_POST['pw']) < 6)
-      header("Location: identification.php?register=ko&error=passwordlength");
+    {
+      $error = 1;
+      header("Location: identification.php?register=password");
+    }
     if ($_POST['pw'] != $_POST['pwverif'])
-      header("Location: identification.php?register=ko&error=passwordmatch");
+    {
+      $error = 1;
+      header("Location: identification.php?register=passwordmatch");
+    }
     $uppercase = preg_match('/[A-Z]/', $_POST['pw']);
     $lowercase = preg_match('/[a-z]/', $_POST['pw']);
     $number    = preg_match('/[0-9]/', $_POST['pw']);
     $specialChars = preg_match('/[^\w]/', $_POST['pw']);
     if(!$uppercase || !$lowercase || !$number || !$specialChars)
-      header("Location: identification.php?register=ko&error=passwordstrength");
-    $usr_password = hash('whirlpool', $_POST['pw']);
+    {
+      $error = 1;
+      header("Location: identification.php?register=password");
+    }
+    if (!isset($error))
+      $usr_password = hash('whirlpool', $_POST['pw']);
     //Convert birthdate to MYSQL format
     $usr_birthdate = date("Y-m-d", strtotime($_POST['birthday']));
   }
@@ -43,32 +63,31 @@ try {
     $request = 'SELECT `username` FROM `users`';
     foreach ($dbh->query($request) as $result)
     {
-      if (isset($result['username']) && $result['username'] == $usr_username)
+      if (isset($result['username']) && isset($usr_username) && $result['username'] == $usr_username)
       {
         $error = 1;
-        header('Location: identification.php?register=ko&error=usernameexists');
+        header('Location: identification.php?register=usernameexists');
       }
     }
     $request = 'SELECT `email` FROM `users`';
     foreach ($dbh->query($request) as $result)
     {
-      if (isset($result['email']) && $result['email'] == $usr_email)
+      if (isset($result['email']) && isset($usr_email) && $result['email'] == $usr_email)
       {
         $error = 1;
-        header('Location: identification.php?register=ko&error=emailexists');
+        header('Location: identification.php?register=emailexists');
       }
     }
     //If everything is ok, register the user
-    if (!isset($error))
+    if (!isset($error) && isset($usr_username) && isset($usr_email) && isset($usr_password) && isset($usr_birthdate))
     {
       $request = $dbh->prepare('INSERT INTO `users` (`username`, `password`, `email`, `birthdate`, `avatar`) VALUES (:usr_username, :usr_password, :usr_email, :usr_birthdate, :avatar)');
       $request->bindParam(':usr_username', $usr_username);
       $request->bindParam(':usr_password', $usr_password);
       $request->bindParam(':usr_email', $usr_email);
       $request->bindParam(':usr_birthdate', $usr_birthdate);
-      $file = file_get_contents('img/default.png');
-      $img = base64_encode($file);
-      $request->bindParam(':avatar', $img);
+      $file = 'img/avatars/default.png';
+      $request->bindParam(':avatar', $file);
       $request->execute();
       require('sendmail.php');
       $hashedmail = strtoupper(hash('whirlpool', $usr_email));

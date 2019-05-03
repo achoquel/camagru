@@ -43,16 +43,16 @@ session_start();
           {
             $user = $users['username'];
             $avatar = $users['avatar'];
-            echo "<div class='res'><a class='user' href='profile.php?user=$user'><img class='pp' src='data:image/png;base64,$avatar' alt='$user avatar'><h1>$user</h1></a></div>";
+            echo "<div class='res'><a class='user' href='profile.php?user=$user'><img class='pp' src='$avatar' alt='$user avatar'><h1>$user</h1></a></div>";
           }
           echo "<br><br><h1 class='title'>Pictures</h1><hr>";
           foreach ($_SESSION['search_pics'] as $picture)
           {
-              $username = $picture['username'];
-              $imgsrc = $picture['picture'];
-              $img_id = $picture['post_id'];
-              $desc  = $picture['description'];
-              echo "<div class='pic'>";
+              $username = htmlspecialchars($picture['username']);
+              $imgsrc = htmlspecialchars($picture['picture']);
+              $img_id = htmlspecialchars($picture['post_id']);
+              $desc  = htmlspecialchars($picture['description']);
+              echo "<a href='detail.php?id=$img_id'><div class='pic'>";
               echo "<div class='user'><h1 class='username'>$username</h1></div>";
               if ($picture['private'] == 0 || ($picture['private'] == 1 && isset($_SESSION['id'])))
                 echo "<div class='picture'><img src='$imgsrc' alt='Picture of $username'></div>";
@@ -60,11 +60,10 @@ session_start();
                 echo "<div class='picture'><img src='img/private.png' alt='Picture of $username'></div>";
               if ($picture['private'] == 0 || ($picture['private'] == 1 && isset($_SESSION['id'])))
                 echo "<div class='desc'><h1 class='descuser'>$username</h1>   <h2 class='desccont'>$desc</h2></div>";
-              echo "</div>";
+              echo "</div></a>";
             }
           unset($_SESSION['search_users']);
           unset($_SESSION['search_pics']);
-          unset($_SESSION['object']);
         }
       }
          ?>

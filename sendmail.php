@@ -107,7 +107,7 @@ else {
     if (!empty($res))
     {
       $mail = $_POST['email'];
-      $username = $res['username'];
+      $username = htmlspecialchars($res['username']);
       username($mail, $username);
     }
     header('Location: identification.php?login');
@@ -123,7 +123,6 @@ else {
     $res = $request->fetch(PDO::FETCH_ASSOC);
     if (!empty($res))
     {
-      require('config/correction.php');
       $mail = $res['email'];
       $hashedmail = strtoupper(hash('whirlpool', $mail));
       $link = "$PATH_TO_WEBSITE/recover.php?pr=$hashedmail";

@@ -1,4 +1,9 @@
 <?php
+header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
+header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
 session_start();
 if (isset($_SESSION) && !isset($_SESSION['id']))
   header("Location: identification.php?login");
@@ -37,7 +42,7 @@ if (isset($_SESSION) && !isset($_SESSION['id']))
       </div>
     <?php } else if (isset($_GET) && isset($_GET['webcam'])) {?>
       <div class="bodywebcam">
-        <div class="filterlist">
+        <div class="filterlist" id="flist">
           <table>
             <tr>
               <td><img src="img/filters/bw.png" alt="bw" id="bw"></td>
@@ -60,31 +65,94 @@ if (isset($_SESSION) && !isset($_SESSION['id']))
           <video id="video"></video>
           <button id="startbutton"><i class="fas fa-camera"></i></button>
           <button id="reset"><i class="fas fa-trash"></i></button>
-          <button id="keep"><i class="fas fa-check"></i></button>
+          <form style="display: inline;" action="imageprocessing.php" method="post">
+            <input type="hidden" name="picture" id="saver" value="">
+            <input type="hidden" name="filter" id="filterr" value="">
+            <input type="hidden" name="blkwt" id="blackwhite" value="">
+            <button type="submit" id="keep"><i class="fas fa-check"></i></button>
+          </form>
+        </div>
+        <div class="montages" id="mlist"><?php
+            $id = $_SESSION['id'];
+            $user_montages = glob("img/tmp/$id-*");
+            foreach ($user_montages as $picture) {
+              echo "<img src='$picture' alt='montage'>";
+              echo "<form action='montage.php' method='post'>
+                <input type='hidden' name='picture' value='$picture'>
+                <input type='hidden' name='action' value='delete'>
+                <button type='submit' class='delete'><i class='fas fa-trash'></i></button>
+              </form>";
+              echo "<form action='montage.php' method='post'>
+                <input type='hidden' name='picture' value='$picture'>
+                <input type='hidden' name='action' value='prepare'>
+                <button type='submit' class='send'><i class='far fa-paper-plane'></i></button>
+              </form>";
+            }
+          ?>
         </div>
         <canvas id="canvas"></canvas>
         <script src="js/editor.js" charset="utf-8"></script>
       </div>
     <?php } else if (isset($_GET) && isset($_GET['upload'])) {?>
       <div class="bodywebcam">
-        <div class="filters">
+        <div class="filterlist" id="flist">
           <table>
             <tr>
-              <td><div style="background: url('img/filter/rainbow.png') 50% 50% no-repeat;" class="filter" id="1">
-              </div>Rainbow Filter</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <td><img src="img/filters/bw.png" alt="bw" id="bw"></td>
+              <td><img src="img/filters/rgb.png" alt="rgb" id="rgb"></td>
+              <td><i class="fas fa-times" id="none"></i></td>
+              <td><img src="img/filters/rainbow.png" alt="Rainbow" id="rainbow"></td>
+              <td><img src="img/filters/bry.png" alt="Instagradient" id="insta"></td>
+              <td><img src="img/filters/dog.png" alt="Dog" id="doggo"></td>
+              <td><img src="img/filters/42.png" alt="42" id="fortytwo"></td>
+              <td><img src="img/filters/federation.png" alt="Federation" id="federation"></td>
+              <td><img src="img/filters/assembly.png" alt="Assembly" id="assembly"></td>
+              <td><img src="img/filters/order.png" alt="Order" id="order"></td>
+              <td><img src="img/filters/alliance.png" alt="Alliance" id="alliance"></td>
             </tr>
           </table>
         </div>
-        <form action="upload.php" method="post" enctype="multipart/form-data">
-          Select image to upload:
-          <input type="file" name="fileToUpload" id="fileToUpload">
-          <input type="submit" value="Tune your image" name="submit">
-        </form>
+        <div class="campreview">
+          <img src="img/filters/empty.png" id="filter" alt="prop">
+          <img src="<?php if (isset($_SESSION['currentmontage'])){ echo $_SESSION['currentmontage']; unset($_SESSION['currentmontage']);} else echo "img/nia.jpg";?>" id="photo2" alt="photo">
+          <form action="imageupload.php" method="post" id="form" enctype="multipart/form-data">
+            <h2 class='select'>Select image to upload:</h2>
+            <input type="file" name="fileToUpload" id="fileToUpload">
+            <?php if (isset($_GET) && isset($_GET['error'])){ ?>
+              <h5 class='error'>An error occurred during upload. Be sure to respect the requirements listed below !</h5>
+            <?php } ?>
+            <h3 class='recommendations'>Max file size: 2Mo. Recommended format: 4/3.<br>
+            If the picture is not a 4/3 picture, the filter applied to it might be deformed.
+            If the picture contains a transparent background, the filter will be applied as if there was no transparency.<br>Allowed files: .jpg, .jpeg</h3>
+            <button id="startbutton"><i class="fas fa-upload"></i></button>
+          </form>
+          <button id="reset"><i class="fas fa-trash"></i></button>
+          <form style="display: inline;" action="imageprocessing.php" method="post">
+            <input type="hidden" name="picture" id="saver" value="">
+            <input type="hidden" name="filter" id="filterr" value="">
+            <input type="hidden" name="blkwt" id="blackwhite" value="">
+            <button type="submit" id="keep"><i class="fas fa-check"></i></button>
+          </form>
+        </div>
+        <div class="montages" id="mlist"><?php
+            $id = $_SESSION['id'];
+            $user_montages = glob("img/tmp/$id-*");
+            foreach ($user_montages as $picture) {
+              echo "<img src='$picture' alt='montage'>";
+              echo "<form action='montage.php' method='post'>
+                <input type='hidden' name='picture' value='$picture'>
+                <input type='hidden' name='action' value='delete'>
+                <button type='submit' class='delete'><i class='fas fa-trash'></i></button>
+              </form>";
+              echo "<form action='montage.php' method='post'>
+                <input type='hidden' name='picture' value='$picture'>
+                <input type='hidden' name='action' value='prepare'>
+                <button type='submit' class='send'><i class='far fa-paper-plane'></i></button>
+              </form>";
+            }
+          ?>
+        </div>
+        <script src="js/upload.js" charset="utf-8"></script>
       </div>
     <?php } else header("Location: 404.php") ?>
     <div class="footer">

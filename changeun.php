@@ -9,7 +9,7 @@
         if (strlen($_POST['newusername']) == 0 || strlen($_POST['newusername']) > 32)
         {
           $err = 1;
-          header("Location: accountmanager.php?error=ul");
+          header("Location: accountmanager.php?error=uc");
         }
         if (preg_match('/^([a-z]|[A-Z]|[0-9])+$/', $_POST['newusername']) === 0)
         {

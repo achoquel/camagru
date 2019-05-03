@@ -8,11 +8,8 @@
     require('config/database.php');
     require('config/correction.php');
     try {
-      //Create Connection
       $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
       $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      //Requests here
-      //Check for username unicity
       $request = 'SELECT `username`, `password`, `validated`, `user_id` FROM `users`';
       foreach ($dbh->query($request) as $result)
       {

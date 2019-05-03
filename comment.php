@@ -18,12 +18,23 @@ if (isset($_POST) && isset($_POST['comment']) && isset($_POST['id']) && isset($_
       $request->bindParam(':pid', $_POST['id']);
       $request->bindParam(':comment', $_POST['comment']);
       $request->execute();
+      $request = $dbh->prepare('SELECT `users`.`user_id`
+                                FROM `users`
+                                INNER JOIN `posts` ON `posts`.`user_id` = `users`.`user_id`
+                                WHERE `post_id` = :pid');
+      $request->bindParam(':pid', $_POST['id']);
+      $request->execute();
+      $to = $request->fetch(PDO::FETCH_ASSOC);
+      $request = $dbh->prepare('INSERT INTO `notif` (`from_user_id`, `type`, `to_user_id`) VALUES (:uid, "1", :touid)');
+      $request->bindParam(':uid', $_SESSION['id']);
+      $request->bindParam(':touid', $to['user_id']);
+      $request->execute();
       $request = $dbh->prepare('SELECT `username` FROM `users` WHERE `user_id` = :uid');
       $request->bindParam(':uid', $_SESSION['id']);
       $request->execute();
       $res = $request->fetch(PDO::FETCH_ASSOC);
       $from = $res['username'];
-      $request = $dbh->prepare('SELECT `username`, `email`
+      $request = $dbh->prepare('SELECT `username`, `email`, `pref_mail`
                                 FROM `users`
                                 INNER JOIN `posts` ON `users`.`user_id` = `posts`.`user_id`
                                 WHERE `post_id` = :pid');
@@ -32,10 +43,14 @@ if (isset($_POST) && isset($_POST['comment']) && isset($_POST['id']) && isset($_
       $res = $request->fetch(PDO::FETCH_ASSOC);
       $email = $res['email'];
       $to = $res['username'];
+      $pref = $res['pref_mail'];
       $request = null;
       $dbh = null;
-      require('sendmail.php');
-      notif($email, 'commented', $to, $from);
+      if ($pref == '1')
+      {
+        require('sendmail.php');
+        notif($email, 'commented', $to, $from);
+      }
       header("Location: detail.php?id=$post_id");
     } catch (PDOException $e) {
     print "Erreur !: " . $e->getMessage() . "<br/>";

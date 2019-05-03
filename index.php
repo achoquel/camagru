@@ -42,7 +42,6 @@
       <div class="body">
         <?php
           try {
-            require('config/database.php');
             $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
             $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $request = 'SELECT `post_id`, `posts`.`user_id`, `us`.`username` AS `username`, `pu`.`pref_private` AS `private`, `picture`, `description`, `av`.`avatar` AS `avatar`
@@ -69,14 +68,14 @@
           {
             foreach ($result as $picture)
             {
-                $userid = $picture['user_id'];
+                $userid = htmlspecialchars($picture['user_id']);
                 $username = htmlspecialchars($picture['username']);
-                $imgsrc = $picture['picture'];
-                $img_id = $picture['post_id'];
+                $imgsrc = htmlspecialchars($picture['picture']);
+                $img_id = htmlspecialchars($picture['post_id']);
                 $desc  = htmlspecialchars($picture['description']);
-                $avatar = $picture['avatar'];
+                $avatar = htmlspecialchars($picture['avatar']);
                 echo "<div class='pic'>";
-                echo "<div class='user'><img class='pp' src='data:image/png;base64,$avatar' alt='$username avatar'> <h1 class='username'>$username</h1></div>";
+                echo "<div class='user'><img class='pp' src='$avatar' alt='$username avatar'> <h1 class='username'>$username</h1></div>";
                 if ($picture['private'] == 0 || ($picture['private'] == 1 && isset($_SESSION['id'])))
                   echo "<div class='picture'><img src='$imgsrc' alt='Picture of $username'></div>";
                 else
@@ -93,7 +92,7 @@
                   else
                     $liked = 1;
                   $page = $_GET['page'];
-                  echo "<a href='like.php?id=$img_id&p=$page' class='like'";
+                  echo "<a href='like.php?id=$img_id' class='like'";
                   if ($liked == 1)
                     echo " style='color:red;'><i class='fas fa-heart'></i></a>";
                   else
@@ -112,7 +111,7 @@
             </form>
             <form class="more" action="index.php" method="get">
               <input type="hidden" name="page" value="<?php $pagep = $_GET['page'] + 1; echo $pagep;?>">
-              <input type="submit" value="❯" <?php if ($total - $_GET['page'] * 5 < 5) echo "disabled";?>/>
+              <input type="submit" value="❯" <?php if ($total - $_GET['page'] * 5 <= 5) echo "disabled";?>/>
             </form>
             </div>
             <?php

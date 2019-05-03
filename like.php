@@ -4,6 +4,7 @@ if (isset($_SESSION) && !isset($_SESSION['id']))
   header('Location: identification.php?login');
 if (isset($_GET) && isset($_GET['id']))
 {
+  $pagefrom = $_SERVER['HTTP_REFERER'];
   require('config/database.php');
   try {
     $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
@@ -29,19 +30,32 @@ if (isset($_GET) && isset($_GET['id']))
         $request->bindParam(':uid', $_SESSION['id']);
         $request->bindParam(':tuid', $exists['user_id']);
         $request->execute();
-        $request = $dbh->prepare('SELECT `username`,`email` FROM `users` WHERE `user_id` = :tuid OR `user_id` = :uid');
+        $request = $dbh->prepare('SELECT `username`,`email`,`pref_mail` FROM `users` WHERE `user_id` = :tuid OR `user_id` = :uid');
         $request->bindParam(':uid', $_SESSION['id']);
         $request->bindParam(':tuid', $exists['user_id']);
         $request->execute();
         $res = $request->fetchAll(PDO::FETCH_ASSOC);
-        $email = $res['1']['email'];
-        $to = $res['1']['username'];
         $from = $res['0']['username'];
+        if (isset($res['1']))
+        {
+          $email = $res['1']['email'];
+          $to = $res['1']['username'];
+          $pref = $res['1']['pref_mail'];
+        }
+        else
+        {
+          $email = $res['0']['email'];
+          $to = $res['1']['username'];
+          $pref = $res['0']['pref_mail'];
+        }
         $request = null;
         $dbh = null;
-        require('sendmail.php');
-        notif($email, 'liked', $to, $from);
-        header("Location: index.php?page=".$_GET['p']);
+        if ($pref == '1')
+        {
+          require('sendmail.php');
+          notif($email, 'liked', $to, $from);
+        }
+          header("Location: $pagefrom");
       }
       else
       {
@@ -51,7 +65,7 @@ if (isset($_GET) && isset($_GET['id']))
         $request->execute();
         $request = null;
         $dbh = null;
-        header("Location: index.php?page=".$_GET['p']);
+        header("Location: $pagefrom");
       }
     }
     else

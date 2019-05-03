@@ -76,12 +76,12 @@ die();
             {
               if (isset($notif) && isset($notif['0']) && isset($notif['1']))
               {
-                $avatar = $notif['2'];
-                $username = $notif['0'];
+                $avatar = htmlspecialchars($notif['2']);
+                $username = htmlspecialchars($notif['0']);
                 if ($notif['1'] == '2')
-                  echo "<div class='not'><img class='pp' src='data:image/png;base64,$avatar' alt='$username avatar'> <h2 class='from'>".$notif['0']."</h2><h2 class='notif'>     liked your picture !"."</h2></div>";
+                  echo "<div class='not'><img class='pp' src='$avatar' alt='$username avatar'> <h2 class='from'>".$username."</h2><h2 class='notif'>     liked your picture !"."</h2></div>";
                 else
-                  echo "<img class='pp' src='data:image/png;base64,$avatar' alt='$username avatar'> <h2 class='from'>".$notif['0']."</h2><h2 class='notif'> commented your picture !"."</h2>";
+                  echo "<div class='not'><img class='pp' src='$avatar' alt='$username avatar'> <h2 class='from'>".$username."</h2><h2 class='notif'>     commented your picture !"."</h2></div>";
                 echo "<hr>";
               }
             }

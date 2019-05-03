@@ -18,16 +18,16 @@ foreach ($dbh->query($request) as $result)
   else
     $pref_private = 0;
   if (isset($result['firstname']) && $result['firstname'] != null)
-    $fn = $result['firstname'];
+    $fn = htmlspecialchars($result['firstname']);
   if (isset($result['lastname']) && $result['lastname'] != null)
-    $ln = $result['lastname'];
+    $ln = htmlspecialchars($result['lastname']);
   if (isset($result['country']) && $result['country'] != null)
-    $country = $result['country'];
+    $country = htmlspecialchars($result['country']);
   if (isset($result['city']) && $result['city'] != null)
-    $city = $result['city'];
+    $city = htmlspecialchars($result['city']);
   if (isset($result['job']) && $result['job'] != null)
-    $job = $result['job'];
-  $avatar = $result['avatar'];
+    $job = htmlspecialchars($result['job']);
+  $avatar = htmlspecialchars($result['avatar']);
 }
 $request = null;
 $dbh = null;
@@ -56,6 +56,9 @@ $dbh = null;
       </div>
       <div class="body">
         <h1>Account Manager</h1>
+        <?php if (isset($_GET) && isset($_GET['error']) && empty($_GET['error'])){ ?>
+          <h5 class='error'>An error occurred !</h5>
+        <?php } ?>
         <hr class="main">
         <h2>User Informations</h2>
         <hr class="sep">
@@ -67,14 +70,38 @@ $dbh = null;
           <tr>
             <td><form class="" action="changemail.php" method="post">
               <input type="text" name="nemail" value="" placeholder="✉️ New Email" required>
+              <?php if (isset($_GET) && isset($_GET['error']) && $_GET['error'] == 'ev'){ ?>
+                <h5 class='error'>The email you entered is invalid !</h5>
+              <?php } ?>
+              <?php if (isset($_GET) && isset($_GET['error']) && $_GET['error'] == 'eu'){ ?>
+                <h5 class='error'>The email you entered is already in use !</h5>
+              <?php } ?>
               <input type="password" name="passwd" value="" placeholder="🔑 Password" required>
+              <?php if (isset($_GET) && isset($_GET['error']) && $_GET['error'] == 'ep'){ ?>
+                <h5 class='error'>The password you entered is wrong !</h5>
+              <?php } ?>
               <input type="submit" name="submit" value="Modify Email">
+              <?php if (isset($_GET) && isset($_GET['success']) && $_GET['success'] == 'email'){ ?>
+                <h5 class='success'>Your email has been changed !</h5>
+              <?php } ?>
             </form></td>
             <td><form class="" action="changepw.php" method="post">
               <input type="password" name="oldpasswd" value="" placeholder="🗝 Old Password" required>
+              <?php if (isset($_GET) && isset($_GET['error']) && $_GET['error'] == 'pi'){ ?>
+                <h5 class='error'>The password you entered is wrong !</h5>
+              <?php } ?>
               <input type="password" name="newpasswd" value="" placeholder="🔑 New Password" required>
+              <?php if (isset($_GET) && isset($_GET['error']) && $_GET['error'] == 'pc'){ ?>
+                <h5 class='error'>Passwords must be at least 6 characters long, and must contain at least 1 capital letter, 1 lowercase letter, 1 number and 1 special character !</h5>
+              <?php } ?>
               <input type="password" name="newverifpasswd" value="" placeholder="🔐 New Password (Verification)" required>
+              <?php if (isset($_GET) && isset($_GET['error']) && $_GET['error'] == 'pm'){ ?>
+                <h5 class='error'>Passwords don't match !</h5>
+              <?php } ?>
               <input type="submit" name="submit" value="Modify Password">
+              <?php if (isset($_GET) && isset($_GET['success']) && $_GET['success'] == 'password'){ ?>
+                <h5 class='success'>Your password has been changed !</h5>
+              <?php } ?>
             </form></td>
           </tr>
           <tr>
@@ -83,31 +110,67 @@ $dbh = null;
           <tr>
             <td><form class="" action="changeun.php" method="post">
               <input type="text" name="newusername" value="" placeholder="🤠 New Username" required>
+              <?php if (isset($_GET) && isset($_GET['error']) && $_GET['error'] == 'uc'){ ?>
+                <h5 class='error'>Username must be at least 1 character long and max. 32 ! It must contain only letters and numbers</h5>
+              <?php } ?>
+              <?php if (isset($_GET) && isset($_GET['error']) && $_GET['error'] == 'uu'){ ?>
+                <h5 class='error'>Username already in use !</h5>
+              <?php } ?>
               <input type="password" name="passwd" value="" placeholder="🔑 Password" required>
+              <?php if (isset($_GET) && isset($_GET['error']) && $_GET['error'] == 'up'){ ?>
+                <h5 class='error'>The password you entered is wrong !</h5>
+              <?php } ?>
               <input type="submit" name="submit" value="Modify Username">
+              <?php if (isset($_GET) && isset($_GET['success']) && $_GET['success'] == 'username'){ ?>
+                <h5 class='success'>Your username has been changed !</h5>
+              <?php } ?>
             </form></td>
           </tr>
         </table>
         <h2>Avatar</h2>
         <hr class="sep">
         <h2>Current Avatar:</h2>
-        <img class='avatar' src="data:image/png;base64,<?php echo $avatar; ?>" alt="avatar">
+        <img class='avatar' src="<?php echo $avatar; ?>" alt="avatar">
         <br>
         <form action="avatarupload.php" method="post" enctype="multipart/form-data">
           <h2 class='select'>Select image to upload:</h2>
           <input type="file" name="fileToUpload" id="fileToUpload">
           <h3 class='recommendations'>Max file size: 2Mo. Recommended format: 200x200 px or higher.<br>
           If the picture is not a square, it might be deformed.</h3>
+          <?php if (isset($_GET) && isset($_GET['error']) && $_GET['error'] == 'av'){ ?>
+            <h5 class='error'>An error occurred when uploading your file ! Please try again !</h5>
+          <?php } ?>
+          <?php if (isset($_GET) && isset($_GET['error']) && $_GET['error'] == 'af'){ ?>
+            <h5 class='error'>Your file is not an image ! Supported formats: .png, .jpg, .jpeg</h5>
+          <?php } ?>
+          <?php if (isset($_GET) && isset($_GET['error']) && $_GET['error'] == 'as'){ ?>
+            <h5 class='error'>Your file is too big ! Max size: 2Mo</h5>
+          <?php } ?>
           <input type="submit" value="Set Avatar" name="submit">
         </form>
         <form class="" action="changeother.php" method="post">
         <h2>Personnal Information</h2>
         <hr class="sep">
         <input type="text" name="firstname" value="<?php if (isset($fn)) echo $fn; ?>" placeholder="First Name">
+        <?php if (isset($_GET) && isset($_GET['error']) && $_GET['error'] == 'fn'){ ?>
+          <h5 class='error'>This field must be 42 characters long maximum and contain only letters and ,.'- !</h5>
+        <?php } ?>
         <input type="text" name="lastname" value="<?php if (isset($ln)) echo $ln; ?>" placeholder="Last Name">
+        <?php if (isset($_GET) && isset($_GET['error']) && $_GET['error'] == 'ln'){ ?>
+          <h5 class='error'>This field must be 42 characters long maximum and contain only letters and ,.'- !</h5>
+        <?php } ?>
         <input type="text" name="country" value="<?php if (isset($country)) echo $country; ?>" placeholder="🏳️ Country">
+        <?php if (isset($_GET) && isset($_GET['error']) && $_GET['error'] == 'ce'){ ?>
+          <h5 class='error'>This field must be 42 characters long maximum and contain only letters and ,.'- !</h5>
+        <?php } ?>
         <input type="text" name="city" value="<?php if (isset($city)) echo $city; ?>" placeholder="🏘 City">
+        <?php if (isset($_GET) && isset($_GET['error']) && $_GET['error'] == 'ci'){ ?>
+          <h5 class='error'>This field must be 42 characters long maximum and contain only letters and ,.'- !</h5>
+        <?php } ?>
         <input type="text" name="job" value="<?php if (isset($job)) echo $job; ?>" placeholder="💼 Job">
+        <?php if (isset($_GET) && isset($_GET['error']) && $_GET['error'] == 'je'){ ?>
+          <h5 class='error'>This field must be 42 characters long maximum and contain only letters and ,.'- !</h5>
+        <?php } ?>
         <h2>Preference</h2>
         <hr class="sep">
           <input type="checkbox" <?php if ($pref_mail == 1){ ?> checked="checked" value="" <?php } else {?>value="" <?php }?> name="mnotif" /> Send me an email for each notifications I receive.
@@ -115,6 +178,9 @@ $dbh = null;
           <input type="checkbox" <?php if ($pref_private == 1){ ?> checked="checked" value="" <?php } else {?>value="" <?php }?> name="privatedata" value="0" /> Make my posts invisible for non-logged users.
           <br>
           <input type="submit" name="submit" value="Save Changes">
+          <?php if (isset($_GET) && isset($_GET['success']) && $_GET['success'] == 'other'){ ?>
+            <h5 class='success'>Your informations have been changed !</h5>
+          <?php } ?>
         </form>
       </div>
       <div class="footer">

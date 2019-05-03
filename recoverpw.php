@@ -4,14 +4,18 @@ if (isset($_SESSION) && isset($_SESSION['id']))
   header('404.php');
 else
 {
-    if (isset($_POST) && isset($_POST['newpasswd']) && isset($_POST['email']) && isset($_POST['newverifpasswd']) && isset($_POST['submit']) && $_POST['submit'] == 'Modify Password')
+    if (isset($_POST) && isset($_POST['newpasswd']) && isset($_POST['email']) && isset($_POST['pr']) && isset($_POST['newverifpasswd']) && isset($_POST['submit']) && $_POST['submit'] == 'Modify Password')
     {
+      $he = $_POST['pr'];
       if (strlen($_POST['newpasswd']) < 6)
+      {
         $err = 1;
+        header("Location: recover.php?pr=$he&error=pc");
+      }
       if ($_POST['newpasswd'] != $_POST['newverifpasswd'])
       {
         $err = 1;
-        header('Location: ');
+        header("Location: recover.php?pr=$he&error=pm");
       }
       $uppercase = preg_match('/[A-Z]/', $_POST['newpasswd']);
       $lowercase = preg_match('/[a-z]/', $_POST['newpasswd']);
@@ -20,7 +24,7 @@ else
       if(!$uppercase || !$lowercase || !$number || !$specialChars)
       {
         $err = 1;
-        header('Location: ');
+        header("Location: recover.php?pr=$he&error=pc");
       }
       if (!isset($err))
       {

@@ -63,9 +63,18 @@ else
       </form>
     <?php } else if (isset($recovery)) {?>
       <form action="recoverpw.php" method="post">
+        <h1>Password Modification</h1>
+        <h2>Remember: Your password must contain at least 6 characters, with at least 1 lowercase character, 1 uppercase character, 1 number and 1 special char !</h2>
         <input type="password" name="newpasswd" value="" placeholder="🔑 New Password" required>
+        <?php if (isset($_GET) && isset($_GET['error']) && $_GET['error'] == 'pc'){ ?>
+          <h5 class='success'>Your password must contain at least 6 characters, with at least 1 lowercase character, 1 uppercase character, 1 number and 1 special char !</h5>
+        <?php } ?>
         <input type="password" name="newverifpasswd" value="" placeholder="🔐 New Password (Verification)" required>
-        <input type="hidden" name="email" value="<?php echo $recovery; ?>">
+        <?php if (isset($_GET) && isset($_GET['error']) && $_GET['error'] == 'pm'){ ?>
+          <h5 class='success'>Passwords don't match !</h5>
+        <?php } ?>
+        <input type="hidden" name="pr" value="<?php echo $_GET['pr']; ?>">
+        <input type="hidden" name="email" value="<?php echo htmlspecialchars($recovery); ?>">
         <input type="submit" name="submit" value="Modify Password">
       </form>
     <?php } else

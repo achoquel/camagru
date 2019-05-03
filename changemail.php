@@ -6,7 +6,12 @@
   {
       if (isset($_POST) && isset($_POST['nemail']) && isset($_POST['passwd']) && isset($_POST['submit']) && $_POST['submit'] == 'Modify Email')
       {
-        if (filter_var($_POST['nemail'], FILTER_VALIDATE_EMAIL))
+        if (empty($_POST['nemail']) || filter_var($_POST['nemail'], FILTER_VALIDATE_EMAIL) === false)
+        {
+          $error = 1;
+          header("Location: accountmanager.php?error=ev");
+        }
+        else
         {
           $new_email = $_POST['nemail'];
           require('config/database.php');
@@ -44,8 +49,6 @@
           $request = null;
           $dbh = null;
         }
-        else
-          header("Location: accountmanager.php?error=ev");
       }
       else
         header("Location: accountmanager.php?error");

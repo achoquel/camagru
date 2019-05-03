@@ -69,21 +69,24 @@ h6 {
 */
 
 canvas {
-    display: none;
+  display: none;
 }
 
 .campreview {
   position: relative;
+  display: inline-block;
   z-index: 0;
   padding: 0;
-  top: 5vh;
-  left: 3vw;
-  width: 30vw;
+  margin-left: 3vw;
+  margin-top: 5vh;
+  margin-right: 0;
+  width: 50%;
 }
 
 .campreview img {
   position: absolute;
   top: 0;
+  margin: 0;
   left: 0;
   width: 30vw;
   height: auto;
@@ -102,8 +105,7 @@ canvas {
 }
 
 #reset {
-  width: 40%;
-  margin-left: 7%;
+  width: 30%;
   margin-right: 5%;
   color: white;
   padding: 10px 10px;
@@ -121,8 +123,27 @@ canvas {
   cursor: pointer;
 }
 
+.delete {
+  margin-left: 1.5vw;
+  margin-right: 2vw;
+  color: white;
+  padding: 10px 10px;
+  border: none;
+  font-size: 1vw;
+  border-radius: 4px;
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #bd2c2c), color-stop(1, #ff3838));
+	background:-moz-linear-gradient(top, #bd2c2c 5%, #ff3838 100%);
+	background:-webkit-linear-gradient(top, #bd2c2c 5%, #ff3838 100%);
+	background:-o-linear-gradient(top, #bd2c2c 5%, #ff3838 100%);
+	background:-ms-linear-gradient(top, #bd2c2c 5%, #ff3838 100%);
+	background:linear-gradient(to bottom, #bd2c2c 5%, #ff3838 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#bd2c2c', endColorstr='#ff3838',GradientType=0);
+	background-color:#bd2c2c;
+  cursor: pointer;
+}
+
 #keep {
-  width: 40%;
+  width: 30%;
   color: white;
   padding: 10px 10px;
   margin: 15px 0;
@@ -133,8 +154,19 @@ canvas {
   cursor: pointer;
 }
 
+.send {
+  color: white;
+  padding: 10px 10px;
+  margin: 0.2vh 0;
+  border: none;
+  font-size: 1vw;
+  border-radius: 4px;
+  background-image: linear-gradient(to left bottom, #6bd16d, #63d664, #5adc5b, #4fe150, #43e643, #41ea42, #3eed42, #3bf141, #45f44e, #4ef65a, #57f965, #5ffb6f);
+  cursor: pointer;
+}
+
 #startbutton {
-  width: 100%;
+  width: 30vw;
   color: white;
   padding: 10px 10px;
   margin: 15px 0;
@@ -196,12 +228,26 @@ canvas {
   padding-right: 2vw;
 }
 
+
+#photo2 {
+  position: relative;
+  width: 30vw;
+  height: auto;
+  z-index: 0;
+}
+
+#filter {
+  z-index: 2;
+}
+
+
 .bodywebcam {
+  position: absolute;
   padding-top: 5.8vh;
   padding-bottom: 7vh;
   background-color: #ececec;
   width: 90vw;
-  height: 100%;
+  height: auto;
   margin-left: 5vw;
   margin-right: 5vw;
   -webkit-box-shadow: 0px 0px 50px -5px rgba(0,0,0,0.3);
@@ -209,17 +255,53 @@ canvas {
   box-shadow: 0px 0px 50px -5px rgba(0,0,0,0.3);
 }
 
+.montages {
+  position: absolute;
+  display: inline-block;
+  width: 15vw;
+  overflow-y: auto;
+  right: 1vw;
+  max-height: 30vw;
+}
+
+.montages img{
+  width: 10vw;
+  margin-bottom: 0;
+  margin-right: 0;
+  padding-bottom: 0;
+  padding-right: 0;
+  height: auto;
+  display: block;
+}
+
 .buttons {
   position: relative;
 }
 
-/*
-** Upload Page
-*/
-.filter {
-  position: relative;
-  width: 3vw;
-  height: 3vw;
-  margin-bottom: 0;
-  display: block;
+.montages form {
+  margin-top: 0;
+  padding-top: 0;
+  display: inline-block;
+  text-align: center;
+}
+
+.select {
+  font-family: Verdana;
+  display: inline-block;
+  font-size: 1.3vw;
+}
+
+.recommendations {
+  font-family: Verdana;
+  font-weight: normal;
+  font-size: 1vw;
+}
+
+.error {
+  text-align: center;
+  color: red;
+  margin: 0;
+  padding: 0;
+  font-family: Verdana;
+  font-size: 1vw;
 }
