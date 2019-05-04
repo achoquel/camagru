@@ -2,9 +2,10 @@
 session_start();
 if (isset($_SESSION) && !isset($_SESSION['id']))
   header('Location: identification.php?login');
-if (isset($_GET) && isset($_GET['id']))
+else if (isset($_GET) && isset($_GET['id']) && isset($_SESSION['id']))
 {
-  $pagefrom = $_SERVER['HTTP_REFERER'];
+  if (isset($_SERVER['HTTP_REFERER']))
+    $pagefrom = $_SERVER['HTTP_REFERER'];
   require('config/database.php');
   try {
     $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
@@ -45,17 +46,20 @@ if (isset($_GET) && isset($_GET['id']))
         else
         {
           $email = $res['0']['email'];
-          $to = $res['1']['username'];
+          $to = $res['0']['username'];
           $pref = $res['0']['pref_mail'];
         }
         $request = null;
         $dbh = null;
         if ($pref == '1')
         {
-          require('sendmail.php');
+          require_once('sendmail.php');
           notif($email, 'liked', $to, $from);
         }
-          header("Location: $pagefrom");
+        if (isset($pagefrom))
+          header("Location: ".$pagefrom);
+        else
+          header('Location: index.php');
       }
       else
       {
@@ -65,7 +69,10 @@ if (isset($_GET) && isset($_GET['id']))
         $request->execute();
         $request = null;
         $dbh = null;
-        header("Location: $pagefrom");
+        if (isset($pagefrom))
+          header("Location: ".$pagefrom);
+        else
+          header('Location: index.php');
       }
     }
     else

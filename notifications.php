@@ -2,37 +2,39 @@
 session_start();
 if (isset($_SESSION) && !isset($_SESSION['id']))
   header('Location: identification.php?login');
-require('config/database.php');
-try {
-  $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  if (isset($_GET['clear']))
-  {
+else {
+  require('config/database.php');
+  try {
+    $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    if (isset($_GET['clear']))
+    {
       $request = $dbh->prepare('DELETE FROM `notif` WHERE `to_user_id` = :uid');
       $request->bindParam(':uid', $_SESSION['id']);
       $request->execute();
       $request = null;
       $dbh = null;
       header('Location: notifications.php');
-  } else {
-  $request = 'SELECT `fu`.`username` AS `from`, `type`, `tu`.`username` AS `to`, `av`.`avatar` AS `avatar`
-  FROM `notif`
-  INNER JOIN `users` fu ON `notif`.`from_user_id` = `fu`.`user_id`
-  INNER JOIN `users` av ON `notif`.`from_user_id` = `av`.`user_id`
-  INNER JOIN `users` tu ON `notif`.`to_user_id` = `tu`.`user_id`
-  WHERE `to_user_id` = "'.$_SESSION['id'].'"';
-  $notifs = array();
-  foreach ($dbh->query($request) as $result)
-  {
-    if (isset($result['from']) && isset($result['type']))
-      $notifs[] = array($result['from'], $result['type'], $result['avatar']);
-  }
-}
+    } else {
+      $request = 'SELECT `fu`.`username` AS `from`, `type`, `tu`.`username` AS `to`, `av`.`avatar` AS `avatar`
+      FROM `notif`
+      INNER JOIN `users` fu ON `notif`.`from_user_id` = `fu`.`user_id`
+      INNER JOIN `users` av ON `notif`.`from_user_id` = `av`.`user_id`
+      INNER JOIN `users` tu ON `notif`.`to_user_id` = `tu`.`user_id`
+      WHERE `to_user_id` = "'.$_SESSION['id'].'"';
+      $notifs = array();
+      foreach ($dbh->query($request) as $result)
+      {
+        if (isset($result['from']) && isset($result['type']))
+        $notifs[] = array($result['from'], $result['type'], $result['avatar']);
+      }
+    }
   $request = null;
   $dbh = null;
-} catch (PDOException $e) {
-print "Erreur !: " . $e->getMessage() . "<br/>";
-die();
+  } catch (PDOException $e) {
+    print "Erreur !: " . $e->getMessage() . "<br/>";
+    die();
+  }
 }
 ?>
 <!DOCTYPE html>

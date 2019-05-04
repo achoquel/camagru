@@ -1,7 +1,8 @@
 <?php
-session_start();
+if (!isset($_SESSION))
+  session_start();
 if (isset($_SESSION) && isset($_SESSION['id']))
-  header('404.php');
+  header('Location: 404.php');
 function confirm($mail, $link, $username)
 {
   $subject = 'Camagru - Account Activation';
@@ -25,7 +26,7 @@ function confirm($mail, $link, $username)
       mail($mail, $subject, $message, implode("\r\n", $headers));
 }
 
-function password($mail, $link, $username)
+function password($mail, $link)
 {
   $subject = 'Camagru - Password Recovery';
   $message = '
@@ -34,7 +35,7 @@ function password($mail, $link, $username)
         <title>Camagru - Password Recovery</title>
        </head>
        <body>
-       Hi <b>'.$username.'</b> !<br>
+       Hi !<br>
        It appears that you forgot your password to log-in on Camagru !
        <br>
        To reset your password, just click the link below :) Have a nice day with us !
@@ -115,6 +116,7 @@ else {
   if (isset($_POST) && isset($_POST['type']) && isset($_POST['email']) && $_POST['type'] == 'password')
   {
     require('config/database.php');
+    require('config/correction.php');
     $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $request = $dbh->prepare('SELECT `email` FROM `users` WHERE `email` = :mail');
@@ -126,7 +128,7 @@ else {
       $mail = $res['email'];
       $hashedmail = strtoupper(hash('whirlpool', $mail));
       $link = "$PATH_TO_WEBSITE/recover.php?pr=$hashedmail";
-      password($mail, $link, $username);
+      password($mail, $link);
     }
     header('Location: identification.php?login');
   }

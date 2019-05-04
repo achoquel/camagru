@@ -2,6 +2,7 @@
 session_start();
 if (isset($_SESSION) && !isset($_SESSION['id']))
   header("Location: identification.php?login");
+else {
 // Get preferences state
 require('config/database.php');
 $dbh = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
@@ -193,3 +194,4 @@ $dbh = null;
     </div>
   </body>
 </html>
+<?php } ?>

@@ -128,7 +128,7 @@ if (isset($_GET) && isset($_GET['id']))
             $liked = 0;
           else
             $liked = 1;
-          echo "<a href='like.php?id=".$_GET['id']."&detail' class='like'";
+          echo "<a href='like.php?id=".$_GET['id']."' class='like'";
           if ($liked == 1)
             echo " style='color:red;'><i class='fas fa-heart'></i></a>";
           else

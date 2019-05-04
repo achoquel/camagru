@@ -34,7 +34,7 @@ if ($uploadOk == 0) {
       unlink($target_file);
       $id = $_SESSION['id'];
       $capture = "img/tmp/capture/$id.$imageFileType";
-      if (isset($capture))
+      if (isset($capture) && file_exists($capture))
         unlink($capture);
       file_put_contents($capture, $file);
       $_SESSION['currentmontage'] = $capture;
